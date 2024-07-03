@@ -1,0 +1,6 @@
+@MarketPeruCore_HostAddress = http://localhost:5199
+
+GET {{MarketPeruCore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
