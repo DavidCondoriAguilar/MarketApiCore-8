@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MarketPeruCore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fbbc80d636ece6fc5a91bb8586f08b4cb942b73")]
 [assembly: System.Reflection.AssemblyProductAttribute("MarketPeruCore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MarketPeruCore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

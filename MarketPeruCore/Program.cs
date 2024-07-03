@@ -1,5 +1,5 @@
+using MarketPeruCore.Models;
 using Microsoft.EntityFrameworkCore;
-using ServicioRestCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+builder.Services.AddDbContext<MarketPeruContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
 var app = builder.Build();
 

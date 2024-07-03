@@ -2,7 +2,6 @@
 using MarketPeruCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServicioRestCore;
 
 namespace MarketPeruCore.Controllers
 {
@@ -10,9 +9,9 @@ namespace MarketPeruCore.Controllers
     [Route("api/tienditarest/categoria")]
     public class CategoriaController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
+        private readonly MarketPeruContext _context;
 
-        public CategoriaController(ApplicationDBContext context)
+        public CategoriaController(MarketPeruContext context)
         {
             _context = context;
         }
@@ -21,20 +20,24 @@ namespace MarketPeruCore.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<CategoriaDTO>>> FindAll()
         {
-            return await _context.Categorias.Select(c => new CategoriaDTO
-            {
-                IdCategoria = c.IdCategoria,
-                Nombre = c.Nombre,
-                Descripcion = c.Descripcion,
-                Estado = c.Estado
-            }).ToListAsync();
+            var categorias = await _context.Categorias
+                .Select(c => new CategoriaDTO
+                {
+                    IdCategoria = c.IdCategoria,
+                    Nombre = c.Nombre,
+                    Descripcion = c.Descripcion,
+                    Estado = c.Estado
+                })
+                .ToListAsync();
+
+            return Ok(categorias);
         }
 
         // Obtener todas las categorías habilitadas
         [HttpGet("custom")]
         public async Task<ActionResult<List<CategoriaDTO>>> FindAllCustom()
         {
-            return await _context.Categorias
+            var categorias = await _context.Categorias
                 .Where(c => c.Estado == true)
                 .Select(c => new CategoriaDTO
                 {
@@ -42,7 +45,10 @@ namespace MarketPeruCore.Controllers
                     Nombre = c.Nombre,
                     Descripcion = c.Descripcion,
                     Estado = c.Estado
-                }).ToListAsync();
+                })
+                .ToListAsync();
+
+            return Ok(categorias);
         }
 
         // Agregar una nueva categoría
@@ -55,8 +61,10 @@ namespace MarketPeruCore.Controllers
                 Descripcion = categoriaDTO.Descripcion,
                 Estado = categoriaDTO.Estado
             };
-            _context.Add(categoria);
+
+            _context.Categorias.Add(categoria);
             await _context.SaveChangesAsync();
+
             return Ok();
         }
 
@@ -78,7 +86,8 @@ namespace MarketPeruCore.Controllers
             {
                 return NotFound();
             }
-            return categoria;
+
+            return Ok(categoria);
         }
 
         // Actualizar una categoría
@@ -100,8 +109,8 @@ namespace MarketPeruCore.Controllers
             categoria.Descripcion = categoriaDTO.Descripcion;
             categoria.Estado = categoriaDTO.Estado;
 
-            _context.Update(categoria);
             await _context.SaveChangesAsync();
+
             return Ok();
         }
 
@@ -116,8 +125,8 @@ namespace MarketPeruCore.Controllers
             }
 
             categoria.Estado = false;
-            _context.Update(categoria);
             await _context.SaveChangesAsync();
+
             return Ok();
         }
     }

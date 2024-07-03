@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MarketPeruCore.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class RunSqlScript : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace MarketPeruCore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                    Estado = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -71,7 +71,7 @@ namespace MarketPeruCore.Migrations
                     CodigoPostal = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Fax = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                    Estado = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -113,7 +113,7 @@ namespace MarketPeruCore.Migrations
                     StockActual = table.Column<short>(type: "smallint", nullable: false),
                     StockMinimo = table.Column<short>(type: "smallint", nullable: false),
                     Descontinuado = table.Column<bool>(type: "bit", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                    Estado = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -142,6 +142,12 @@ namespace MarketPeruCore.Migrations
                 name: "IX_GUIA_IdLocal",
                 table: "GUIA",
                 column: "IdLocal");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LOCAL_Direccion",
+                table: "LOCAL",
+                column: "Direccion",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PRODUCTO_IdCategoria",

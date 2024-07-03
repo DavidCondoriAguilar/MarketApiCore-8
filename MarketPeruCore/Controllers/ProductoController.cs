@@ -2,17 +2,16 @@
 using MarketPeruCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServicioRestCore;
-
+    
 namespace MarketPeruCore.Controllers
 {
     [ApiController]
     [Route("api/tienditarest/producto")]
     public class ProductoController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
+        private readonly MarketPeruContext _context;
 
-        public ProductoController(ApplicationDBContext context)
+        public ProductoController(MarketPeruContext context)
         {
             _context = context;
         }

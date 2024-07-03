@@ -2,7 +2,6 @@
 using MarketPeruCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServicioRestCore;
 
 namespace MarketPeruCore.Controllers
 {
@@ -10,9 +9,9 @@ namespace MarketPeruCore.Controllers
     [Route("api/tienditarest/orden")]
     public class OrdenController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
+        private readonly MarketPeruContext _context;
 
-        public OrdenController(ApplicationDBContext context)
+        public OrdenController(MarketPeruContext context)
         {
             _context = context;
         }
