@@ -1,4 +1,6 @@
+using MarketPeruCore.Interfaces;
 using MarketPeruCore.Models;
+using MarketPeruCore.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MarketPeruContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
+//CONFIGURANDO SERVICES ADD
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IGuiaService, GuiaService>();
+builder.Services.AddScoped<ILocalService, LocalService>();
+builder.Services.AddScoped<IOrdenService, OrdenService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
+
+//
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

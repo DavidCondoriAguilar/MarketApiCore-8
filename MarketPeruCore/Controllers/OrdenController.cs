@@ -1,7 +1,8 @@
 ﻿using MarketPeruCore.DTO;
-using MarketPeruCore.Models;
+using MarketPeruCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MarketPeruCore.Controllers
 {
@@ -9,63 +10,38 @@ namespace MarketPeruCore.Controllers
     [Route("api/tienditarest/orden")]
     public class OrdenController : ControllerBase
     {
-        private readonly MarketPeruContext _context;
+        private readonly IOrdenService _ordenService;
 
-        public OrdenController(MarketPeruContext context)
+        public OrdenController(IOrdenService ordenService)
         {
-            _context = context;
+            _ordenService = ordenService;
         }
 
-        // Obtener todas las órdenes
         [HttpGet("")]
         public async Task<ActionResult<List<OrdenDTO>>> FindAll()
         {
-            return await _context.Ordenes.Select(o => new OrdenDTO
-            {
-                IdOrden = o.IdOrden,
-                FechaOrden = o.FechaOrden,
-                FechaEntrada = o.FechaEntrada,
-                Estado = o.Estado
-            }).ToListAsync();
+            var ordenes = await _ordenService.FindAll();
+            return Ok(ordenes);
         }
 
-        // Agregar una nueva orden
         [HttpPost("")]
         public async Task<ActionResult> Add(OrdenDTO ordenDTO)
         {
-            var orden = new Orden
-            {
-                FechaOrden = ordenDTO.FechaOrden,
-                FechaEntrada = ordenDTO.FechaEntrada,
-                Estado = ordenDTO.Estado
-            };
-            _context.Add(orden);
-            await _context.SaveChangesAsync();
+            await _ordenService.Add(ordenDTO);
             return Ok();
         }
 
-        // Buscar una orden por ID
         [HttpGet("{id:int}")]
         public async Task<ActionResult<OrdenDTO>> FindById(int id)
         {
-            var orden = await _context.Ordenes
-                .Select(o => new OrdenDTO
-                {
-                    IdOrden = o.IdOrden,
-                    FechaOrden = o.FechaOrden,
-                    FechaEntrada = o.FechaEntrada,
-                    Estado = o.Estado
-                })
-                .FirstOrDefaultAsync(o => o.IdOrden == id);
-
+            var orden = await _ordenService.FindById(id);
             if (orden == null)
             {
                 return NotFound();
             }
-            return orden;
+            return Ok(orden);
         }
 
-        // Actualizar una orden
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Update(int id, OrdenDTO ordenDTO)
         {
@@ -74,34 +50,14 @@ namespace MarketPeruCore.Controllers
                 return BadRequest("El ID de la orden no coincide.");
             }
 
-            var orden = await _context.Ordenes.FindAsync(id);
-            if (orden == null)
-            {
-                return NotFound();
-            }
-
-            orden.FechaOrden = ordenDTO.FechaOrden;
-            orden.FechaEntrada = ordenDTO.FechaEntrada;
-            orden.Estado = ordenDTO.Estado;
-
-            _context.Update(orden);
-            await _context.SaveChangesAsync();
+            await _ordenService.Update(id, ordenDTO);
             return Ok();
         }
 
-        // Eliminar una orden cambiando su estado a false
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var orden = await _context.Ordenes.FirstOrDefaultAsync(o => o.IdOrden == id);
-            if (orden == null)
-            {
-                return NotFound();
-            }
-
-            orden.Estado = false;
-            _context.Update(orden);
-            await _context.SaveChangesAsync();
+            await _ordenService.Delete(id);
             return Ok();
         }
     }
