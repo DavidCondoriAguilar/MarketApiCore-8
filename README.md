@@ -68,22 +68,6 @@ MarketPeru API utiliza una **Arquitectura en Capas (Layered Architecture)**, tam
 - **Testabilidad**: Las capas bien definidas facilitan la creación de pruebas unitarias y de integración.
 - **Escalabilidad**: La estructura modular permite escalar la aplicación de manera más sencilla.
 
-## Uso
-...
-
-## Estructura de la Base de Datos
-...
-
-## Endpoints
-...
-
-## Contribuir
-...
-
-## Licencia
-...
-
-
 ![22](https://github.com/DavidCondoriAguilar/MarketApiCore-8/assets/103283145/549c2c8b-a2f2-4fd5-9167-431567b0a1e9)
 ![3](https://github.com/DavidCondoriAguilar/MarketApiCore-8/assets/103283145/2eefe971-0a1e-421c-affc-74613f941b56)
 ![2](https://github.com/DavidCondoriAguilar/MarketApiCore-8/assets/103283145/6baca432-d1be-4fa5-a110-06a02919279d)
